@@ -173,7 +173,7 @@ services:
       DNS_INTERNAL_FROM_DOCKER: "1"
       DOCKER_PROJECT: "${COMPOSE_PROJECT_NAME:-{{ whitelist_docker_project_test }}}"
       DOCKER_PRIMARY_SERVICE: "odoo"
-      ALLOWED_HOSTS: >-
+      ALLOWED_HOSTS: &proxy_allowed_hosts >-
         {{ _whitelisted_hosts_test|join(' ') }}
 
   proxy_general:
@@ -190,8 +190,7 @@ services:
       public:
     environment:
       MODE_RUN: "gateway"
-      ALLOWED_HOSTS: >-
-        {{ _whitelisted_hosts_test|join(' ') }}
+      ALLOWED_HOSTS: *proxy_allowed_hosts
   {% endif %}
 networks:
   default:
